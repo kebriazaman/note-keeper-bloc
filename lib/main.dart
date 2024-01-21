@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:note_keeper_bloc/screens/notes_details_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_keeper_bloc/bloc/notes_bloc.dart';
+import 'package:note_keeper_bloc/repository/notes_repository.dart';
+import 'package:note_keeper_bloc/screens/note_list_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const NoteKeeper());
 }
 
@@ -10,9 +14,12 @@ class NoteKeeper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: NotesDetailsScreen(),
+    return BlocProvider(
+      create: (context) => NotesBloc(NotesRepository()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: NoteListScreen(),
+      ),
     );
   }
 }
